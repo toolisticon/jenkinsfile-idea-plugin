@@ -1,0 +1,20 @@
+language: java
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+before_install:
+  - "export DISPLAY=:99.0"
+  - "export PATH=`pwd`/bin:$PATH"
+  - "sh -e /etc/init.d/xvfb start"
+
+install:
+  - ./gradlew clean checkstyleMain checkstyleTest
+
+before_script:
+  - ./gradlew clean build
+
+script:
+  - ./gradlew test

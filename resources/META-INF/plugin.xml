@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>de.holisticon.jenkinsfile</id>
   <name>Jenkinsfile IDEA plugin</name>
-  <version>1.0</version>
+  <version>0.1.0</version>
   <vendor email="oss@holisticon.de" url="https://holisticon.de">Holisticon AG</vendor>
 
   <description><![CDATA[

@@ -1,0 +1,127 @@
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+    }
+}
+
+plugins {
+    id 'net.researchgate.release' version '2.6.0'
+    id "org.jetbrains.intellij" version "0.2.17" apply false
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+group = 'de.holisticon.jenkinsfile'
+
+task jarSources(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+assemble.dependsOn jarSources
+
+
+apply plugin: 'org.jetbrains.intellij'
+intellij {
+    type = ideaEdition
+    version = ideaVersion
+    updateSinceUntilBuild = false
+    downloadSources = true
+    intellijRepo = intellijRepoUrl
+}
+
+dependencies {
+    compile 'joda-time:joda-time:2.9.2'
+
+    testCompile('com.google.truth:truth:0.36') {
+        exclude group: 'com.google.guava', module: 'guava'
+    }
+    testCompile('com.google.truth.extensions:truth-java8-extension:0.36') {
+        exclude group: 'com.google.guava', module: 'guava'
+    }
+    testCompile 'junit:junit:4.+'
+    testCompile 'org.mockito:mockito-core:2.+'
+}
+
+apply plugin: 'jacoco'
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+apply plugin: 'checkstyle'
+configurations {
+    checkstyleConfig
+}
+def versions = [
+        checkstyle: '6.17',
+]
+dependencies {
+    checkstyleConfig("com.puppycrawl.tools:checkstyle:${versions.checkstyle}") {
+        transitive = false
+    }
+    checkstyle "com.puppycrawl.tools:checkstyle:${versions.checkstyle}"
+}
+
+
+checkstyle {
+    configFile = rootProject.file('etc/checkstyle.xml.xml')
+    showViolations true
+    sourceSets = [project.sourceSets.main]
+}
+
+// The checkstyle plugin does not provide a way to fail the build on warnings, and
+// the google_checks.xml sets the severity level to "warning" for all violations. The
+// following is the workaround.
+tasks.withType(Checkstyle).each { checkstyleTask ->
+    checkstyleTask.doLast {
+        reports.all { report ->
+            if (report.name == "xml") {
+                def outputFile = report.destination
+                if (outputFile.exists() && outputFile.text.contains("<error ")) {
+                    throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
+                }
+            }
+        }
+    }
+}
+
+test {
+    testLogging {
+        showStandardStreams = true
+    }
+    systemProperties(System.getProperties())
+    maxParallelForks = 8
+}
+
+
+
+release {
+    buildTasks = ['doRelease']
+    // Do not change the tagTemplate value to double quotes or the version will be evaluated before
+    // the SNAPSHOT version is updated to the release version.
+    tagTemplate = 'v$version'
+    git {
+        requireBranch = /^release_v\d+.*$/
+    }
+}
+
+// We aren't building or doing anything interesting for release.
+// We just update the version and generate the tag as CI will handle deployment.
+task doRelease {
+    doLast {
+        println '===============================!!PLEASE READ!!=================================\n\n' +
+                'IMPORTANT:  The release command will trigger the creation of a new release ' +
+                'in Github, the uploading of binaries to github, and the publishing of our plugin' +
+                'to the IntelliJ plugin repository.\n' +
+                'Hit CTRL+C to cancel.\n'
+    }
+}
