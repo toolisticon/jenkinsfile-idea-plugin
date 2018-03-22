@@ -1,4 +1,4 @@
-package com.oliverlockwood.plugins.jenkinsfile;
+package io.toolisticon.plugins.jenkinsfile;
 
 import com.intellij.lexer.FlexAdapter;
 

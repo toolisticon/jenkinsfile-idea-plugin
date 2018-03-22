@@ -1,8 +1,8 @@
-package com.oliverlockwood.plugins.jenkinsfile;
+package io.toolisticon.plugins.jenkinsfile;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import com.oliverlockwood.plugins.jenkinsfile.psi.JenkinsTypes;
+import io.toolisticon.plugins.jenkinsfile.psi.JenkinsTypes;
 import com.intellij.psi.TokenType;
 
 %%

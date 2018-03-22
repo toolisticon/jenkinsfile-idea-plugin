@@ -1,16 +1,16 @@
 {
-  parserClass="com.oliverlockwood.plugins.jenkinsfile.parser.JenkinsParser"
+  parserClass="io.toolisticon.plugins.jenkinsfile.parser.JenkinsParser"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiClassPrefix="Jenkins"
   psiImplClassSuffix="Impl"
-  psiPackage="com.oliverlockwood.plugins.jenkinsfile.psi"
-  psiImplPackage="com.oliverlockwood.plugins.jenkinsfile.psi.impl"
+  psiPackage="io.toolisticon.plugins.jenkinsfile.psi"
+  psiImplPackage="io.toolisticon.plugins.jenkinsfile.psi.impl"
 
-  elementTypeHolderClass="com.oliverlockwood.plugins.jenkinsfile.psi.JenkinsTypes"
-  elementTypeClass="com.oliverlockwood.plugins.jenkinsfile.psi.JenkinsElementType"
-  tokenTypeClass="com.oliverlockwood.plugins.jenkinsfile.psi.JenkinsTokenType"
+  elementTypeHolderClass="io.toolisticon.plugins.jenkinsfile.psi.JenkinsTypes"
+  elementTypeClass="io.toolisticon.plugins.jenkinsfile.psi.JenkinsElementType"
+  tokenTypeClass="io.toolisticon.plugins.jenkinsfile.psi.JenkinsTokenType"
 }
 
 jenkinsFile ::= item_*

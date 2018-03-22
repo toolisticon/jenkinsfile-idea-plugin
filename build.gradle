@@ -133,14 +133,14 @@ grammarKit {
 // TASKS
 task generateJenkinsParser(type: GenerateParser) {
     source = "src/main/resources/grammar/Jenkins.bnf"
-    pathToParser = '/com/oliverlockwood/plugins/jenkinsfile/parser/JenkinsParser.java'
-    pathToPsiRoot = '/com/oliverlockwood/plugins/jenkinsfile/psi/'
+    pathToParser = '/io/toolisticon/plugins/jenkinsfile/parser/JenkinsParser.java'
+    pathToPsiRoot = '/io/toolisticon/plugins/jenkinsfile/psi/'
 }
 
 task generateJenkinsLexer(type: GenerateLexer) {
     dependsOn generateJenkinsParser
     source = "src/main/resources/grammar/Jenkins.flex"
-    targetDir = "src-gen/com/oliverlockwood/plugins/jenkinsfile/"
+    targetDir = "src-gen/io/toolisticon/plugins/jenkinsfile/"
     targetClass = "JenkinsLexer"
 }
 

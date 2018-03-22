@@ -1,7 +1,7 @@
-package com.oliverlockwood.plugins.jenkinsfile.psi;
+package io.toolisticon.plugins.jenkinsfile.psi;
 
 import com.intellij.psi.tree.IElementType;
-import com.oliverlockwood.plugins.jenkinsfile.JenkinsLanguage;
+import io.toolisticon.plugins.jenkinsfile.JenkinsLanguage;
 import org.jetbrains.annotations.*;
 
 public class JenkinsElementType extends IElementType {

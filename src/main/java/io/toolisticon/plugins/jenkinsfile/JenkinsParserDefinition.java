@@ -1,12 +1,12 @@
-package com.oliverlockwood.plugins.jenkinsfile;
+package io.toolisticon.plugins.jenkinsfile;
 
 import com.intellij.lang.*;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.tree.*;
-import com.oliverlockwood.plugins.jenkinsfile.parser.JenkinsParser;
-import com.oliverlockwood.plugins.jenkinsfile.psi.*;
+import io.toolisticon.plugins.jenkinsfile.parser.JenkinsParser;
+import io.toolisticon.plugins.jenkinsfile.psi.*;
 import org.jetbrains.annotations.NotNull;
 
 public class JenkinsParserDefinition implements ParserDefinition {

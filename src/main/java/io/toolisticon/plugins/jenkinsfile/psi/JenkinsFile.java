@@ -1,9 +1,9 @@
-package com.oliverlockwood.plugins.jenkinsfile.psi;
+package io.toolisticon.plugins.jenkinsfile.psi;
 
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
-import com.oliverlockwood.plugins.jenkinsfile.*;
+import io.toolisticon.plugins.jenkinsfile.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
