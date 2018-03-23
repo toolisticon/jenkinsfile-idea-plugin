@@ -130,6 +130,43 @@ grammarKit {
     grammarKitRelease = grammarkit_version
 }
 
+// CHECKSTYLE
+
+apply plugin: 'checkstyle'
+
+configurations {
+    checkstyleConfig
+}
+
+dependencies {
+    checkstyleConfig("com.puppycrawl.tools:checkstyle:${checkstyleVersion}") {
+        transitive = false
+    }
+    checkstyle "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
+}
+
+checkstyle {
+    configFile = rootProject.file('etc/checkstyle.xml')
+    showViolations true
+    sourceSets = [project.sourceSets.main]
+}
+
+// The checkstyle plugin does not provide a way to fail the build on warnings, and
+// the google_checks.xml sets the severity level to "warning" for all violations. The
+// following is the workaround.
+tasks.withType(Checkstyle).each { checkstyleTask ->
+    checkstyleTask.doLast {
+        reports.all { report ->
+            if (report.name == "xml") {
+                def outputFile = report.destination
+                if (outputFile.exists() && outputFile.text.contains("<error ")) {
+                    throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
+                }
+            }
+        }
+    }
+}
+
 // TASKS
 task generateJenkinsParser(type: GenerateParser) {
     source = "src/main/resources/grammar/Jenkins.bnf"
